@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div style="padding:80px 10%; text-align:center; background:#fff8f0;">
+    <h2 style="font-size:35px; color:#d62828; margin-bottom:40px;">
+        All Customer Feedback 💬
+    </h2>
+
+    <div style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap;">
+
+        {% for feedback, user in feedbacks %}
+        <div style="
+            background:white;
+            padding:25px;
+            width:300px;
+            border-radius:15px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.1);
+        ">
+            <h4 style="color:#ff6600;">{{ user.name }}</h4>
+            <p style="font-size:16px; color:#444;">
+                "{{ feedback.message }}"
+            </p>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}

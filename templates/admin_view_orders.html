@@ -1,0 +1,129 @@
+{% extends "admin_base.html" %}
+
+{% block title %}View Orders{% endblock %}
+
+{% block content %}
+
+<style>
+
+.page-title {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.table-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table thead {
+    background-color: #ff6600;
+    color: white;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 12px;
+    text-align: center;
+}
+
+.admin-table tbody tr {
+    border-bottom: 1px solid #eee;
+}
+
+.admin-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Buttons */
+
+.btn-accept {
+    background-color: #28a745;
+    color: white;
+    padding: 6px 12px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.btn-accept:hover {
+    background-color: #218838;
+}
+
+.btn-deliver {
+    background-color: #007bff;
+    color: white;
+    padding: 6px 12px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+.btn-deliver:hover {
+    background-color: #0069d9;
+}
+
+/* Status Badge */
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    color: white;
+    font-size: 13px;
+}
+
+.status-badge.accepted {
+    background-color: #28a745;
+}
+
+.status-badge.delivered {
+    background-color: #007bff;
+}
+
+.status-badge.pending {
+    background-color: #ffc107;
+    color: black;
+}
+
+</style>
+
+<h1 class="page-title">All Orders</h1>
+
+<div class="table-container">
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>User ID</th>
+                <th>Total</th>
+                <th>Status</th>
+            
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.order_id }}</td>
+                <td>{{ order.user_id }}</td>
+                <td>₹ {{ order.total_amount }}</td>
+                <td>
+                    <span class="status-badge {{ order.status|lower }}">
+                        {{ order.status }}
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

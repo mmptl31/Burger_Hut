@@ -1,0 +1,69 @@
+{% extends "admin_base.html" %}
+
+{% block content %}
+
+<style>
+    .form-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 0;
+    }
+
+    .form-container {
+        background: #fff;
+        padding: 30px;
+        width: 400px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .form-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .form-container input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    .form-container input:focus {
+        border-color: #ff6b6b;
+        outline: none;
+    }
+
+    .form-container button {
+        width: 100%;
+        padding: 10px;
+        background: #ff6b6b;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .form-container button:hover {
+        background: #e55050;
+    }
+</style>
+
+<div class="form-wrapper">
+    <div class="form-container">
+        <h2>Add Delivery Boy</h2>
+
+        <form method="POST">
+            <input type="text" name="name" placeholder="Full Name" required>
+            <input type="text" name="phone" placeholder="Phone Number" required>
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Add Delivery</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

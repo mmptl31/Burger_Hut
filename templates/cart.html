@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 style="text-align:center;">Your Cart 🛒</h2>
+
+<div style="width:70%; margin:auto;">
+
+    {% if items %}
+    <table border="1" cellpadding="10" cellspacing="0" width="100%">
+        <tr>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Subtotal</th>
+            <th>Action</th>
+        </tr>
+
+        {% for item in items %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>₹ {{ item.price }}</td>
+            <td>
+                <form action="/update_quantity/{{ item.id }}" method="POST">
+                    <input type="number" name="quantity" 
+                           value="{{ item.quantity }}" min="1" style="width:60px;">
+                    <button type="submit">Update</button>
+                </form>
+            </td>
+            <td>₹ {{ item.subtotal }}</td>
+            <td>
+                <form action="/remove_from_cart/{{ item.id }}" method="POST">
+                    <button type="submit" style="background:red;color:white;">
+                        Remove
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h3 style="text-align:right; margin-top:20px;">
+        Total Payable: ₹ {{ total }}
+    </h3>
+
+    <form action="/place_order" method="POST" style="text-align:right;">
+        <button type="submit" 
+                style="padding:10px 20px; background:green; color:white;">
+            Place Order
+        </button>
+    </form>
+
+    {% else %}
+    <p style="text-align:center;">Cart is empty 😔</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

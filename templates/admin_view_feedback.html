@@ -1,0 +1,77 @@
+{% extends "admin_base.html" %}
+
+{% block title %}View Feedback{% endblock %}
+
+{% block content %}
+
+<style>
+
+.page-title {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.table-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table thead {
+    background-color: #ff6600;
+    color: white;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 12px;
+    text-align: center;
+}
+
+.admin-table tbody tr {
+    border-bottom: 1px solid #eee;
+}
+
+.admin-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.admin-table tbody tr:hover {
+    background-color: #fff3e6;
+}
+
+</style>
+
+<h1 class="page-title">User Feedback</h1>
+
+<div class="table-container">
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Feedback ID</th>
+                <th>User ID</th>
+                <th>User Name</th>
+                <th>Message</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for feedback, user in feedbacks %}
+            <tr>
+                <td>{{ feedback.feedback_id }}</td>
+                <td>{{ feedback.user_id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ feedback.message }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

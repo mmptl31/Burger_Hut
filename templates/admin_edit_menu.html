@@ -1,0 +1,25 @@
+{% extends "admin_base.html" %}
+
+{% block title %}Edit Menu{% endblock %}
+
+{% block content %}
+
+<h1>Edit Menu Item</h1>
+
+<form method="POST" enctype="multipart/form-data">
+
+    <input type="text" name="item_name" value="{{ item.item_name }}" required><br><br>
+	<textarea name="description" required>{{ item.description }}</textarea><br><br>
+
+    <input type="number" name="price" value="{{ item.price }}" required><br><br>
+
+    <p>Current Image:</p>
+    <img src="{{ url_for('static', filename='images/' + item.image) }}" width="120"><br><br>
+
+    <input type="file" name="image"><br><br>
+
+    <button type="submit">Update</button>
+
+</form>
+
+{% endblock %}

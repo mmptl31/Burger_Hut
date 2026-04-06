@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    .order-container{
+        max-width:900px;
+        margin:40px auto;
+    }
+
+    .card{
+        background:white;
+        padding:25px;
+        border-radius:12px;
+        box-shadow:0 6px 18px rgba(0,0,0,0.08);
+        margin-bottom:20px;
+    }
+
+    .status{
+        padding:6px 12px;
+        border-radius:20px;
+        font-size:14px;
+        font-weight:bold;
+        display:inline-block;
+    }
+
+    .pending{ background:#ffe5b4; color:#cc8400; }
+    .accepted{ background:#cce5ff; color:#004085; }
+    .delivered{ background:#d4edda; color:#155724; }
+
+    table{
+        width:100%;
+        border-collapse:collapse;
+        margin-top:15px;
+    }
+
+    th{
+        background:#d62828;
+        color:white;
+        padding:12px;
+        text-align:center;
+    }
+
+    td{
+        padding:12px;
+        text-align:center;
+        border-bottom:1px solid #eee;
+    }
+
+    .total{
+        text-align:right;
+        font-size:18px;
+        margin-top:15px;
+        font-weight:bold;
+    }
+
+    .back-btn{
+        display:inline-block;
+        margin-top:20px;
+        padding:8px 15px;
+        background:black;
+        color:white;
+        text-decoration:none;
+        border-radius:6px;
+    }
+
+    .back-btn:hover{
+        background:#333;
+    }
+</style>
+
+<div class="order-container">
+
+    <div class="card">
+        <h2>Order Details 📦</h2>
+
+        <p><strong>Order ID:</strong> {{ order.order_id }}</p>
+
+        <p>
+            <strong>Status:</strong>
+            {% if order.status == "Pending" %}
+                <span class="status pending">Waiting for Delivery</span>
+            {% elif order.status == "Accepted" %}
+                <span class="status accepted">Order Confirmed</span>
+            {% elif order.status == "Delivered" %}
+                <span class="status delivered">Successfully Delivered</span>
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>Items</h3>
+
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+
+            {% set total = 0 %}
+            {% for item in items %}
+            {% set total = total + item.price %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>₹ {{ item.price }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <div class="total">
+            Total Amount: ₹ {{ order.total_amount }}
+        </div>
+
+        <a href="/my_orders" class="back-btn">⬅ Back to My Orders</a>
+    </div>
+
+</div>
+
+{% endblock %}

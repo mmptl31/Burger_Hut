@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Login - Burger Hut</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI', sans-serif;
+        }
+
+        body{
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:linear-gradient(135deg,#d62828,#f77f00);
+        }
+
+        .login-container{
+            background:white;
+            padding:50px 40px;
+            width:400px;
+            border-radius:20px;
+            box-shadow:0 20px 40px rgba(0,0,0,0.3);
+            text-align:center;
+            position:relative;
+            overflow:hidden;
+        }
+
+        .login-container h2{
+            margin-bottom:30px;
+            color:#d62828;
+            font-size:28px;
+        }
+
+        .input-box{
+            margin-bottom:20px;
+            text-align:left;
+        }
+
+        .input-box label{
+            font-weight:bold;
+            font-size:14px;
+            color:#444;
+        }
+
+        .input-box input{
+            width:100%;
+            padding:12px;
+            margin-top:5px;
+            border-radius:10px;
+            border:1px solid #ccc;
+            outline:none;
+            transition:0.3s;
+            font-size:15px;
+        }
+
+        .input-box input:focus{
+            border-color:#f77f00;
+            box-shadow:0 0 10px rgba(247,127,0,0.4);
+        }
+
+        .login-btn{
+            width:100%;
+            padding:12px;
+            background:linear-gradient(90deg,#d62828,#f77f00);
+            border:none;
+            color:white;
+            font-size:16px;
+            font-weight:bold;
+            border-radius:25px;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .login-btn:hover{
+            transform:scale(1.05);
+            box-shadow:0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .back-home{
+            margin-top:20px;
+            display:block;
+            text-decoration:none;
+            color:#d62828;
+            font-weight:bold;
+            transition:0.3s;
+        }
+
+        .back-home:hover{
+            color:#f77f00;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+        <h2>Admin Login 🔐</h2>
+
+        <form method="POST">
+            
+            <div class="input-box">
+                <label>Username</label>
+                <input type="text" name="username" placeholder="Enter Username" required>
+            </div>
+
+            <div class="input-box">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Enter Password" required>
+            </div>
+
+            <button type="submit" class="login-btn">
+                Login
+            </button>
+
+        </form>
+
+        <a href="/" class="back-home">← Back to Home</a>
+
+    </div>
+
+</body>
+</html>

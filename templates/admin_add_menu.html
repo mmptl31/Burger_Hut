@@ -1,0 +1,57 @@
+{% extends "admin_base.html" %}
+
+{% block content %}
+
+<div style="
+    min-height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+">
+
+    <div style="
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(15px);
+        padding: 40px;
+        width: 450px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        text-align: center;
+        color:black;
+    ">
+
+        <h2 style="margin-bottom: 25px;">➕ Add Menu Item</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+
+            <input type="text" name="item_name" placeholder="Item Name" required
+                   style="width:100%; padding:10px; margin-bottom:15px; border-radius:10px; border:none;">
+
+            <textarea name="description" placeholder="Description" required
+                      style="width:100%; padding:10px; margin-bottom:15px; border-radius:10px; border:none;"></textarea>
+
+            <input type="number" name="price" placeholder="Price" required
+                   style="width:100%; padding:10px; margin-bottom:15px; border-radius:10px; border:none;">
+
+            <input type="file" name="image" accept="image/*" required
+                   style="width:100%; padding:10px; margin-bottom:20px; border-radius:10px; border:none;">
+
+
+            <button type="submit" style="
+                padding:12px 30px;
+                background: yellow;
+                border: none;
+                border-radius: 25px;
+                font-weight: bold;
+                cursor: pointer;
+            ">
+                Add Item
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

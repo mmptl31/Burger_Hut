@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- HERO -->
+<div class="hero" style="
+    height: 90vh;
+    background: url('https://images.unsplash.com/photo-1550547660-d9450f859349') no-repeat center center/cover;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    color:white;
+    text-align:center;
+">
+    <h1 style="font-size:60px; text-shadow:3px 3px 10px black;">
+        Burger Hut 🍔
+    </h1>
+    <p style="font-size:20px; margin:20px 0;">
+        Fresh • Hot • Delicious
+    </p>
+    <a href="/menu">
+        <button style="
+            padding:12px 30px;
+            background:yellow;
+            border:none;
+            font-weight:bold;
+            border-radius:30px;
+            cursor:pointer;
+        ">
+            Order Now
+        </button>
+    </a>
+</div>
+
+
+<!-- ABOUT -->
+<div id="about" style="padding:80px 10%; text-align:center; background:#fff8f0;">
+    <h2 style="font-size:35px; color:#d62828; margin-bottom:20px;">
+        About Burger Hut
+    </h2>
+
+    <p style="font-size:18px; color:#444; max-width:800px; margin:15px auto;">
+        Welcome to <b>Burger Hut</b> – your ultimate destination for fresh, hot, and mouth-watering burgers.
+        We believe that a great burger is more than just food — it's an experience filled with flavor,
+        quality, and satisfaction.
+    </p>
+
+    <p style="font-size:18px; color:#444; max-width:800px; margin:15px auto;">
+        Our journey started with a simple mission: to serve premium quality burgers made from farm-fresh vegetables,
+        juicy patties, soft toasted buns, and our signature sauces. Every order is prepared with care,
+        maintaining high standards of hygiene and taste.
+    </p>
+
+    <p style="font-size:18px; color:#444; max-width:800px; margin:15px auto;">
+        Whether you love classic cheeseburgers, spicy delights, or loaded combo meals,
+        Burger Hut offers something special for everyone. We continuously improve our menu
+        to bring exciting new flavors to our customers.
+    </p>
+</div>
+<!-- FEEDBACK SECTION -->
+<div id="feedback" style="padding:80px 10%; text-align:center; background:#fff8f0;">
+    <h2 style="font-size:35px; color:#d62828; margin-bottom:40px;">
+        Customer Feedback 💬
+    </h2>
+
+    <div style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap;">
+
+        {% for fb in latest_feedback %}
+        <div style="
+            background:white;
+            padding:25px;
+            width:300px;
+            border-radius:15px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.1);
+        ">
+            <p style="font-size:16px; color:#444;">
+                "{{ fb.message }}"
+            </p>
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <br><br>
+
+    <a href="/all_feedback">
+        <button style="
+            padding:12px 30px;
+            background:#ff6600;
+            border:none;
+            color:white;
+            font-weight:bold;
+            border-radius:30px;
+            cursor:pointer;
+        ">
+            View All Feedback
+        </button>
+    </a>
+</div>
+
+
+<!-- CONTACT -->
+<div id="contact" style="padding:80px 10%; text-align:center; background:white;">
+    <h2 style="font-size:35px; color:#d62828; margin-bottom:20px;">
+        Contact Us
+    </h2>
+
+    <div style="
+        background:#fff;
+        padding:40px;
+        border-radius:15px;
+        box-shadow:0 10px 30px rgba(0,0,0,0.1);
+        max-width:700px;
+        margin:auto;
+    ">
+        <p style="font-size:18px; margin:10px 0;"><b>Email:</b> burgerhut@gmail.com</p>
+        <p style="font-size:18px; margin:10px 0;"><b>Phone:</b> +91 9876543210</p>
+        <p style="font-size:18px; margin:10px 0;"><b>Location:</b> Ahmedabad, Gujarat, India</p>
+
+        <br>
+
+        <p style="font-size:17px; color:#555;">
+            Have questions, feedback, or special requests? We'd love to hear from you!
+            Our team is always ready to assist you and ensure you enjoy the best experience at Burger Hut.
+        </p>
+
+        <p style="font-size:17px; color:#555; margin-top:10px;">
+            Follow us on social media for exciting offers, new menu launches,
+            and exclusive burger deals!
+        </p>
+    </div>
+</div>
+
+{% endblock %}

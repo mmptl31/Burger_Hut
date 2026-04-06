@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Burger Hut</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #fff8f0;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(90deg, #d62828, #f77f00);
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .navbar a:hover {
+            color: yellow;
+            transform: scale(1.1);
+        }
+
+        /* MENU SECTION */
+        .menu-container {
+            padding: 80px 10%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .card h3 {
+            color: #d62828;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #f77f00;
+            margin-top: 10px;
+        }
+
+        footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #d62828;
+        color: white;
+        text-align: center;
+        padding: 15px 0;
+    }
+        .profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-link {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 0 20px;
+    padding: 10px 0;
+    display: inline-block;
+}
+
+.profile-link:hover {
+    color: yellow;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;          /* 🔥 Important */
+    left: 0;
+    background-color: white;
+    min-width: 170px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+    color: black;
+}
+
+.dropdown-content a:hover {
+    background-color: #f77f00;
+    color: white;
+}
+
+/* 🔥 Important line */
+.profile-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+    </style>
+</head>
+
+<body>
+
+    <!-- SAME NAVBAR -->
+    <div class="navbar">
+        <a href="/">Home</a>
+        <a href="/menu">Menu</a>
+        <a href="/#about">About</a>
+        <a href="/all_feedback" class="{% if request.path == '/all_feedback' %}active{% endif %}"> Feedback </a>
+        <a href="/#contact">Contact</a>
+       {% if session.get('user_id') %}
+	    <a href="/cart">Add To Cart</a>
+		<a href="/my_orders">Orders</a>
+      <div class="profile-dropdown">
+    <a href="/profile" class="profile-link">Profile ▾</a>
+
+    <div class="dropdown-content">
+        <a href="/profile">My Profile</a>
+        <a href="/edit_profile">Edit Profile</a>
+		<a href="/give_feedback">Give Feedback</a>
+		<a href="{{ url_for('delete_account') }}"
+   style="color:red; font-weight:bold;">Delete Account</a>
+    </div>
+</div>
+        <a href="/logout_user">Logout</a>
+	   {% else %}
+        <a href="/login">Login</a>
+        <a href="/signup">Sign Up</a>
+       {% endif %}
+
+    </div>
+
+    <!-- PAGE CONTENT -->
+    {% block content %}{% endblock %}
+
+    <!-- SAME FOOTER -->
+    <footer>
+        © 2026 Burger Hut | All Rights Reserved
+    </footer>
+
+</body>
+</html>

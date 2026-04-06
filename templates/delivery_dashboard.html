@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delivery Dashboard</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body{
+            margin:0;
+            font-family: Arial;
+            background:#f4f6f9;
+            display:flex;
+        }
+
+        /* Sidebar */
+        .sidebar{
+            width:220px;
+            background:#d62828;
+            color:white;
+            height:100vh;
+            padding-top:30px;
+            position:fixed;
+        }
+
+        .sidebar h2{
+            text-align:center;
+            margin-bottom:40px;
+        }
+
+        .sidebar a{
+            display:block;
+            padding:15px 25px;
+            text-decoration:none;
+            color:white;
+        }
+
+        .sidebar a:hover{
+            background:#a4161a;
+        }
+
+        /* Main */
+        .main{
+            margin-left:220px;
+            padding:30px;
+            width:100%;
+        }
+
+        .card{
+            background:white;
+            padding:20px;
+            border-radius:12px;
+            box-shadow:0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom:30px;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            background:white;
+            border-radius:10px;
+            overflow:hidden;
+        }
+
+        th, td{
+            padding:12px;
+            border-bottom:1px solid #ddd;
+            text-align:center;
+        }
+
+        th{
+            background:#f77f00;
+            color:white;
+        }
+
+        button{
+            padding:6px 12px;
+            color:white;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+        }
+
+        .accept-btn{
+            background:#007bff;
+        }
+
+        .accept-btn:hover{
+            background:#0056b3;
+        }
+
+        .deliver-btn{
+            background:green;
+        }
+
+        .deliver-btn:hover{
+            background:darkgreen;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <h2>Delivery Panel</h2>
+    <a href="/delivery_dashboard">🏠 Home</a>
+    <a href="/logout_delivery">🚪 Logout</a>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+    <div class="card">
+        <h2>Welcome {{ session['delivery_name'] }}</h2>
+        <h3>Monthly Income: ₹ {{ monthly_income }}</h3>
+    </div>
+
+    <!-- Chart -->
+    <div class="card">
+        <h3>This Month Earnings Overview</h3>
+        <canvas id="incomeChart"></canvas>
+    </div>
+
+    <!-- Orders -->
+    <div class="card">
+        <h3>Orders</h3>
+
+        <table>
+            <tr>
+                <th>Order ID</th>
+                <th>Total Amount</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.order_id }}</td>
+                <td>₹ {{ order.total_amount }}</td>
+                <td>{{ order.status }}</td>
+                <td>
+
+                    {% if order.status == "Pending" %}
+                        <!-- Accept Button -->
+                        <form action="/accept_order/{{ order.order_id }}" method="POST">
+                            <button type="submit" class="accept-btn">
+                                Accept
+                            </button>
+                        </form>
+
+                    {% elif order.status == "Accepted" and order.delivery_id == session["delivery_id"] %}
+                        <!-- Mark Delivered -->
+                        <form action="/mark_delivered/{{ order.order_id }}" method="POST">
+                            <button type="submit" class="deliver-btn">
+                                Mark Delivered
+                            </button>
+                        </form>
+
+                    {% elif order.status == "Delivered" %}
+                        Delivered ✅
+
+                    {% else %}
+                        Not Assigned
+
+                    {% endif %}
+
+                </td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+
+</div>
+
+<!-- Chart Script -->
+<script>
+    const ctx = document.getElementById('incomeChart');
+
+    const incomeChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ chart_labels | safe }},
+            datasets: [{
+                label: 'Daily Earnings ₹',
+                data: {{ chart_data | safe }},
+                borderWidth: 1
+            }]
+        }
+    });
+</script>
+
+</body>
+</html>

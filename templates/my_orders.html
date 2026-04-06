@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 style="text-align:center;">My Orders 📦</h2>
+
+<div style="width:70%; margin:auto;">
+
+{% if orders %}
+    {% for order in orders %}
+        <div style="border:1px solid #ccc; padding:20px; margin:20px 0; border-radius:10px;">
+
+            <p><strong>Order ID:</strong> {{ order.order_id }}</p>
+            <p><strong>Total:</strong> ₹ {{ order.total_amount }}</p>
+
+            <p><strong>Status:</strong> 
+                <span style="
+                    font-weight:bold;
+                    {% if order.status == 'Pending' %}color:orange;
+                    {% elif order.status == 'On The Way' %}color:blue;
+                    {% elif order.status == 'Delivered' %}color:green;
+                    {% elif order.status == 'Cancelled' %}color:red;
+                    {% endif %}
+                ">
+                    {{ order.status }}
+                </span>
+            </p>
+
+            <!-- Buttons Section -->
+            <div style="margin-top:10px;">
+
+                <a href="/order_details/{{ order.order_id }}" 
+                   style="margin-right:15px;">
+                   View Details
+                </a>
+
+                {% if order.status == "Pending" %}
+                <form action="/cancel_order/{{ order.order_id }}" 
+                      method="POST" 
+                      style="display:inline;">
+                    <button type="submit" 
+                            style="background:red; color:white; border:none; padding:6px 12px; border-radius:5px;">
+                        Cancel Order
+                    </button>
+                </form>
+                {% endif %}
+
+            </div>
+
+        </div>
+    {% endfor %}
+{% else %}
+    <p style="text-align:center;">No orders yet 😔</p>
+{% endif %}
+
+</div>
+
+{% endblock %}
