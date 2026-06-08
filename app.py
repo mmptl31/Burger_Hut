@@ -27,7 +27,9 @@ mail = Mail(app)
 
 # ------------------ DATABASE CONNECTION ------------------ #
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
-    'DATABASE_URL')
+    'DATABASE_URL',
+    mysql://root:EfzXhkBXljeGiPDXodhgPCHuLEqWsvme@mysql.railway.internal:3306/railway
+)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
