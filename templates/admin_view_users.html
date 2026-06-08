@@ -1,0 +1,98 @@
+{% extends "admin_base.html" %}
+
+{% block title %}View Users{% endblock %}
+
+{% block content %}
+
+<style>
+
+.page-title {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.table-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+    overflow-x: auto;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1200px;
+}
+
+.admin-table thead {
+    background-color: #ff6600;
+    color: white;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.admin-table tbody tr {
+    border-bottom: 1px solid #eee;
+}
+
+.admin-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.admin-table tbody tr:hover {
+    background-color: #fff3e6;
+}
+
+</style>
+
+<h1 class="page-title">All Registered Users</h1>
+
+<div class="table-container">
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>DOB</th>
+                <th>Gender</th>
+                <th>Street</th>
+                <th>Area</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Code</th>
+                <th>Phone</th>
+                <th>OTP</th>
+                <th>OTP Expiry</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.user_id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.dob }}</td>
+                <td>{{ user.gender }}</td>
+                <td>{{ user.street_address }}</td>
+                <td>{{ user.area }}</td>
+                <td>{{ user.city }}</td>
+                <td>{{ user.state }}</td>
+                <td>{{ user.code }}</td>
+                <td>{{ user.phone_number }}</td>
+                <td>{{ user.otp }}</td>
+                <td>{{ user.otp_expiry }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

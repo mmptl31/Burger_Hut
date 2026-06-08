@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Delivery Panel{% endblock %}</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI', sans-serif;
+        }
+
+        body{
+            display:flex;
+            background:#f4f6f9;
+        }
+
+        /* SIDEBAR */
+        .sidebar{
+            width:250px;
+            height:100vh;
+            background:linear-gradient(180deg,#d62828,#f77f00);
+            color:white;
+            padding:30px 20px;
+            position:fixed;
+            left:0;
+            top:0;
+        }
+
+        .sidebar h2{
+    text-align:center;
+    margin-bottom:40px;
+    color:white !important;
+    font-weight:600;
+}
+
+        .sidebar a{
+            display:block;
+            color:white;
+            text-decoration:none;
+            padding:12px;
+            margin:10px 0;
+            border-radius:8px;
+            transition:0.3s;
+        }
+
+        .sidebar a:hover{
+            background:rgba(255,255,255,0.2);
+            padding-left:20px;
+        }
+
+        /* MAIN CONTENT FIX (IMPORTANT) */
+        .main-content{
+            margin-left:250px;
+            padding:40px;
+            width:100%;
+            min-height:100vh;
+            background:#f4f6f9;
+        }
+
+        /* PAGE WHITE CARD WRAPPER */
+        .page-container{
+            background:white;
+            padding:25px;
+            border-radius:12px;
+            box-shadow:0 6px 18px rgba(0,0,0,0.08);
+        }
+
+        /* HEADINGS */
+        .main-content h1, 
+        .main-content h2{
+            margin-bottom:20px;
+            color:#d62828;
+        }
+
+        /* LOGOUT BUTTON */
+        .logout{
+            margin-top:50px;
+            display:inline-block;
+            padding:10px 25px;
+            background:#d62828;
+            color:white;
+            text-decoration:none;
+            border-radius:25px;
+        }
+
+        /* CARDS */
+        .card-container{
+            display:flex;
+            gap:30px;
+            flex-wrap:wrap;
+        }
+
+        .card{
+            background:white;
+            padding:30px;
+            width:250px;
+            border-radius:15px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.1);
+            transition:0.3s;
+        }
+
+        .card:hover{
+            transform:translateY(-10px);
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <h2>Delivery Panel 👨‍🍳</h2>
+
+        <a href="/delivery_dashboard">Home</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="main-content">
+
+        <!-- IMPORTANT WRAPPER FOR WHITE LOOK -->
+        <div class="page-container">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+    </div>
+
+</body>
+</html>

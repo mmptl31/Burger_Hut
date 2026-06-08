@@ -1,0 +1,130 @@
+{% extends "admin_base.html" %}
+
+{% block title %}View Orders{% endblock %}
+
+{% block content %}
+
+<style>
+
+.page-title {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.table-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table thead {
+    background-color: #ff6600;
+    color: white;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 12px;
+    text-align: center;
+}
+
+.admin-table tbody tr {
+    border-bottom: 1px solid #eee;
+}
+
+.admin-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Status Badge */
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    color: white;
+    font-size: 13px;
+}
+
+.status-badge.accepted {
+    background-color: #28a745;
+}
+
+.status-badge.delivered {
+    background-color: #007bff;
+}
+
+.status-badge.pending {
+    background-color: #ffc107;
+    color: black;
+}
+
+/* View Button */
+
+.btn-view {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff6600, #ff8533);
+    color: white;
+    padding: 7px 14px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+.btn-view:hover {
+    background: linear-gradient(135deg, #e65c00, #ff6600);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.btn-view:active {
+    transform: scale(0.96);
+}
+
+</style>
+
+<h1 class="page-title">All Orders</h1>
+
+<div class="table-container">
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>User ID</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.order_id }}</td>
+                <td>{{ order.user_id }}</td>
+                <td>₹ {{ order.total_amount }}</td>
+                <td>
+                    <span class="status-badge {{ order.status|lower }}">
+                        {{ order.status }}
+                    </span>
+                </td>
+                <td>
+                    <a href="{{ url_for('admin_order_details', order_id=order.order_id) }}" class="btn-view">
+                        View Details
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

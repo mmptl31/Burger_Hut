@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    .edit-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 80px 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+        min-height: 90vh;
+    }
+
+    .container {
+        background: white;
+        padding: 30px;
+        width: 400px;
+        border-radius: 10px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .container h2 {
+        text-align: center;
+        color: #ff1a1a;
+        margin-bottom: 20px;
+    }
+
+    .container input {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .container input:focus {
+        border-color: #ff1a1a;
+        outline: none;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 10px;
+        background: #ff1a1a;
+        border: none;
+        color: white;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .btn:hover {
+        background: #cc0000;
+    }
+
+    .section-title {
+        margin-top: 20px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .back-link {
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+        text-decoration: none;
+        color: #ff1a1a;
+        font-size: 14px;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="edit-wrapper">
+    <div class="container">
+        <h2>Edit Profile</h2>
+
+        <form method="POST">
+
+            <input type="text" name="name"
+                   value="{{ user.name or '' }}"
+                   placeholder="Full Name" required>
+
+            <input type="email" name="email"
+                   value="{{ user.email or '' }}"
+                   placeholder="Email" required>
+
+            <input type="text" name="phone_number"
+                   value="{{ user.phone_number or '' }}"
+                   placeholder="Phone Number" required>
+
+            <input type="text" name="street_address"
+                   value="{{ user.street_address or '' }}"
+                   placeholder="Street Address" required>
+
+            <input type="text" name="area"
+                   value="{{ user.area or '' }}"
+                   placeholder="Area" required>
+
+            <input type="text" name="city"
+                   value="{{ user.city or '' }}"
+                   placeholder="City" required>
+
+            <input type="text" name="state"
+                   value="{{ user.state or '' }}"
+                   placeholder="State" required>
+
+            <div class="section-title">Change Password</div>
+
+            <input type="password" name="current_password" placeholder="Current Password">
+            <input type="password" name="new_password" placeholder="New Password">
+            <input type="password" name="confirm_password" placeholder="Confirm Password">
+
+            <button type="submit" class="btn">Update Profile</button>
+
+        </form>
+
+        <a href="/profile" class="back-link">← Back to Profile</a>
+    </div>
+</div>
+
+{% endblock %}

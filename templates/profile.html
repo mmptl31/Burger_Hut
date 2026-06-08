@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div style="
+    min-height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+">
+
+    <div style="
+        background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+        backdrop-filter: blur(15px);
+        padding: 45px;
+        width: 420px;
+        border-radius: 25px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        text-align: center;
+        color: black;
+        transition: 0.3s;
+    ">
+
+        <h2 style="
+            margin-bottom: 25px;
+            font-size: 28px;
+            letter-spacing: 1px;
+        ">
+            👤 My Profile
+        </h2>
+
+        <div style="
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        ">
+            <strong>Name:</strong><br>
+            <span style="font-size:18px;">{{ user.name }}</span>
+        </div>
+
+        <div style="
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        ">
+            <strong>Email:</strong><br>
+            <span style="font-size:16px;">{{ user.email }}</span>
+        </div>
+
+        <a href="/logout_user">
+            <button style="
+                padding:12px 30px;
+                background: yellow;
+                border: none;
+                border-radius: 30px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: 0.3s;
+            "
+            onmouseover="this.style.background='white'"
+            onmouseout="this.style.background='yellow'"
+            >
+                Logout
+            </button>
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

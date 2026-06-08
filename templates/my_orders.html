@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 style="text-align:center; margin-top:20px;">My Orders 📦</h2>
+
+<!-- FILTER -->
+<form method="GET" class="filter-bar">
+
+    <div class="filter-box">
+
+        <div class="input-group">
+            <label>From</label>
+            <input type="date" name="from_date"
+                   value="{{ request.args.get('from_date', '') }}">
+        </div>
+
+        <div class="input-group">
+            <label>To</label>
+            <input type="date" name="to_date"
+                   value="{{ request.args.get('to_date', '') }}">
+        </div>
+
+        <button type="submit" class="filter-btn">Apply Filter</button>
+
+        {% if request.args.get('from_date') or request.args.get('to_date') %}
+        <a href="/my_orders" class="reset-btn">Reset</a>
+        {% endif %}
+
+    </div>
+
+</form>
+
+<style>
+
+/* FILTER UI */
+.filter-bar{
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.filter-box{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: white;
+    padding: 15px 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.input-group{
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    color: #666;
+}
+
+.input-group input{
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.filter-btn{
+    background: #ff6b35;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.reset-btn{
+    background: #e74c3c;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* ORDER CARD */
+.order-container{
+    width:70%;
+    margin:auto;
+}
+
+.order-card{
+    background:white;
+    padding:18px;
+    margin:18px 0;
+    border-radius:12px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.06);
+    border:1px solid #eee;
+}
+
+/* STATUS */
+.status{
+    font-weight:bold;
+}
+
+.status.pending{ color:orange; }
+.status.ontheway{ color:blue; }
+.status.delivered{ color:green; }
+.status.cancelled{ color:red; }
+
+/* BUTTON */
+.cancel-btn{
+    background:red;
+    color:white;
+    border:none;
+    padding:6px 12px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.view-link{
+    margin-right:15px;
+    text-decoration:none;
+    color:#333;
+    font-weight:500;
+}
+
+</style>
+
+<div class="order-container">
+
+{% if orders %}
+    {% for order in orders %}
+        <div class="order-card">
+
+            <!-- ORDER DETAILS (NO ORDER ID) -->
+            <p><strong>Total Amount:</strong> ₹ {{ order.total_amount }}</p>
+
+            <p>
+                <strong>Status:</strong>
+                <span class="status
+                    {% if order.status == 'Pending' %}pending
+                    {% elif order.status == 'On The Way' %}ontheway
+                    {% elif order.status == 'Delivered' %}delivered
+                    {% elif order.status == 'Cancelled' %}cancelled
+                    {% endif %}
+                ">
+                    {{ order.status }}
+                </span>
+            </p>
+
+            <!-- ACTIONS -->
+            <div style="margin-top:10px;">
+
+                <a href="/order_details/{{ order.order_id }}" class="view-link">
+                    View Details
+                </a>
+
+                {% if order.status == "Pending" %}
+                <form action="/cancel_order/{{ order.order_id }}" method="POST" style="display:inline;">
+                    <button type="submit" class="cancel-btn">
+                        Cancel Order
+                    </button>
+                </form>
+                {% endif %}
+
+            </div>
+
+        </div>
+    {% endfor %}
+{% else %}
+    <p style="text-align:center;">No orders yet 😔</p>
+{% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,137 @@
+{% extends "admin_base.html" %}
+
+{% block title %}Order Details{% endblock %}
+
+{% block content %}
+
+<style>
+.container-box {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h2 {
+    margin: 0;
+    color: #333;
+}
+
+.status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    color: white;
+    font-size: 13px;
+}
+
+.status.pending {
+    background: #ffc107;
+    color: black;
+}
+
+.status.accepted {
+    background: #28a745;
+}
+
+.status.delivered {
+    background: #007bff;
+}
+
+.details {
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.table th {
+    background: #ff6600;
+    color: white;
+    padding: 10px;
+}
+
+.table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+.table tr:hover {
+    background: #f9f9f9;
+}
+
+.total-box {
+    text-align: right;
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.back-btn {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    background: #333;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 6px;
+}
+
+.back-btn:hover {
+    background: #000;
+}
+</style>
+
+<div class="container-box">
+
+    <div class="header">
+        <h2>Order #{{ order.order_id }}</h2>
+        <span class="status {{ order.status|lower }}">
+            {{ order.status }}
+        </span>
+    </div>
+
+    <div class="details">
+        <p><b>User ID:</b> {{ order.user_id }}</p>
+        <p><b>Total Amount:</b> ₹ {{ order.total_amount }}</p>
+        <p><b>Date:</b> {{ order.order_date.strftime('%d %b %Y') }}</p>
+    </div>
+
+    <h3>Items</h3>
+
+    <table class="table">
+        <tr>
+            <th>Item Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+
+        {% for item in items %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>₹ {{ item.price }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="total-box">
+        Total: ₹ {{ order.total_amount }}
+    </div>
+
+    <a href="/admin/view_orders" class="back-btn">⬅ Back to Orders</a>
+
+</div>
+
+{% endblock %}

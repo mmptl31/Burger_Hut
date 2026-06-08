@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+body {
+    background: #f6f7fb;
+    font-family: Arial, sans-serif;
+}
+
+.cart-container {
+    width: 85%;
+    margin: 30px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #ff6b35;
+    color: white;
+    padding: 12px;
+}
+
+td {
+    text-align: center;
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    text-align: center;
+}
+
+button {
+    padding: 6px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.update-btn {
+    background: #3498db;
+    color: white;
+}
+
+.remove-btn {
+    background: #e74c3c;
+    color: white;
+}
+
+.place-order {
+    float: right;
+    margin-top: 20px;
+    background: green;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.total-box {
+    text-align: right;
+    font-size: 20px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+</style>
+
+<div class="cart-container">
+
+<h2>🛒 Your Cart</h2>
+
+{% if items %}
+
+<table>
+    <tr>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Qty</th>
+        <th>Subtotal</th>
+        <th>Action</th>
+    </tr>
+
+    {% for item in items %}
+    <tr>
+        <td>{{ item.name }}</td>
+        <td>₹ <span class="price">{{ item.price }}</span></td>
+
+        <td>
+            <input type="number"
+                   value="{{ item.quantity }}"
+                   min="1"
+                   class="qty"
+                   data-price="{{ item.price }}"
+                   data-id="{{ item.id }}">
+        </td>
+
+        <td>₹ <span class="subtotal">{{ item.subtotal }}</span></td>
+
+        <td>
+            <form action="/remove_from_cart/{{ item.id }}" method="POST">
+                <button class="remove-btn">Remove</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<div class="total-box">
+    Total: ₹ <span id="total">{{ total }}</span>
+</div>
+
+<div style="
+    margin-top: 25px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+">
+
+   
+
+    <!-- Button -->
+    <form action="/place_order" method="POST">
+        <button class="place-order" style="
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+            border: none;
+            padding: 12px 22px;
+            color: white;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        "
+        onmouseover="this.style.transform='scale(1.05)'"
+        onmouseout="this.style.transform='scale(1)'">
+            Place Order
+        </button>
+    </form>
+
+</div>
+
+{% else %}
+<p style="text-align:center;">Cart is empty 😔</p>
+{% endif %}
+
+</div>
+
+<script>
+// Auto price calculation
+let qtyInputs = document.querySelectorAll(".qty");
+
+qtyInputs.forEach(input => {
+    input.addEventListener("input", function () {
+
+        let price = parseFloat(this.dataset.price);
+        let qty = parseInt(this.value);
+
+        let row = this.closest("tr");
+        let subtotalElement = row.querySelector(".subtotal");
+
+        let newSubtotal = price * qty;
+        subtotalElement.innerText = newSubtotal;
+
+        updateTotal();
+    });
+});
+
+function updateTotal() {
+    let subtotals = document.querySelectorAll(".subtotal");
+    let total = 0;
+
+    subtotals.forEach(el => {
+        total += parseFloat(el.innerText);
+    });
+
+    document.getElementById("total").innerText = total;
+}
+</script>
+
+{% endblock %}

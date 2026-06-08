@@ -1,0 +1,284 @@
+{% extends "delivery_base.html" %}
+
+{% block title %}Delivery Dashboard{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* FULL PAGE LAYOUT */
+.main-content{
+    margin-left:250px;
+    padding:35px;
+    width:calc(100% - 250px);
+    background:#f6f7fb;
+}
+
+/* CARDS */
+.card{
+    background:#fff;
+    padding:25px;
+    border-radius:14px;
+    border:1px solid #eee;
+    box-shadow:0 6px 18px rgba(0,0,0,0.05);
+    margin-bottom:22px;
+    width:100%;
+}
+
+/* HEADINGS */
+.card h2{
+    color:#1f1f1f;
+    margin-bottom:8px;
+    font-size:22px;
+}
+
+.card h3{
+    color:#444;
+    font-weight:500;
+}
+
+/* STATS GRID (FULL WIDTH) */
+.stats-container{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:22px;
+    width:100%;
+}
+
+/* RESPONSIVE */
+@media(max-width:1000px){
+    .stats-container{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px){
+    .stats-container{
+        grid-template-columns:1fr;
+    }
+}
+
+/* STAT CARD */
+.stat-card{
+    background:#fff;
+    border:1px solid #eee;
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.03);
+    transition:0.2s;
+}
+
+.stat-card:hover{
+    transform:translateY(-4px);
+}
+
+.stat-card h2{
+    color:#d62828;
+    font-size:26px;
+    margin-top:8px;
+}
+
+.stat-card h3{
+    font-size:13px;
+    color:#666;
+    font-weight:500;
+}
+
+/* TABLE */
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+th{
+    background:#111;
+    color:#fff;
+    padding:12px;
+    font-size:12px;
+    letter-spacing:0.5px;
+}
+
+td{
+    padding:12px;
+    text-align:center;
+    border-bottom:1px solid #f0f0f0;
+}
+
+/* STATUS */
+.status-pending{
+    color:#f77f00;
+    font-weight:600;
+}
+
+.status-accepted{
+    color:#d62828;
+    font-weight:600;
+}
+
+.status-delivered{
+    color:#2e7d32;
+    font-weight:600;
+}
+
+/* BUTTONS */
+.btn{
+    padding:7px 12px;
+    border-radius:7px;
+    font-size:12px;
+    border:none;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-block;
+    transition:0.2s;
+    margin:2px;
+}
+
+.accept-btn{
+    background:#f77f00;
+    color:#fff;
+}
+
+.accept-btn:hover{
+    background:#e86c00;
+}
+
+.deliver-btn{
+    background:#d62828;
+    color:#fff;
+}
+
+.deliver-btn:hover{
+    background:#b71c1c;
+}
+
+.view-btn{
+    background:#222;
+    color:#fff;
+}
+
+.view-btn:hover{
+    background:#444;
+}
+
+/* ACTION GROUP */
+.action-group{
+    display:flex;
+    gap:6px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+/* WELCOME TEXT */
+.welcome-title{
+    font-size:20px;
+    font-weight:600;
+    color:#111;
+}
+
+</style>
+
+<!-- WELCOME -->
+<div class="card">
+    <div class="welcome-title">🍔 Welcome {{ session['delivery_name'] }}</div>
+    <h3>💰 Monthly Income: ₹ {{ monthly_income }}</h3>
+</div>
+
+<!-- STATS -->
+<div class="stats-container">
+
+    <div class="stat-card">
+        <h3>Total Orders</h3>
+        <h2>{{ orders|length }}</h2>
+    </div>
+
+    <div class="stat-card">
+        <h3>Pending</h3>
+        <h2>{{ orders|selectattr("status","equalto","Pending")|list|length }}</h2>
+    </div>
+
+    <div class="stat-card">
+        <h3>Accepted</h3>
+        <h2>{{ orders|selectattr("status","equalto","Accepted")|list|length }}</h2>
+    </div>
+
+    <div class="stat-card">
+        <h3>Delivered</h3>
+        <h2>{{ orders|selectattr("status","equalto","Delivered")|list|length }}</h2>
+    </div>
+
+</div>
+
+<!-- ORDERS -->
+<div class="card">
+    <h3>🚚 Orders</h3>
+
+    <table>
+        <tr>
+            <th>Order ID</th>
+            <th>Total Amount</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+
+        {% for order in orders %}
+        <tr>
+            <td>#{{ order.order_id }}</td>
+            <td>₹ {{ order.total_amount }}</td>
+
+            <td>
+                {% if order.status == "Pending" %}
+                    <span class="status-pending">Pending ⏳</span>
+
+                {% elif order.status == "Accepted" %}
+                    <span class="status-accepted">Accepted 🍟</span>
+
+                {% elif order.status == "Delivered" %}
+                    <span class="status-delivered">Delivered ✅</span>
+
+                {% else %}
+                    <span>Not Assigned</span>
+                {% endif %}
+            </td>
+
+            <td>
+                <div class="action-group">
+
+                    {% if order.status == "Pending" %}
+
+                        <form action="/accept_order/{{ order.order_id }}" method="POST">
+                            <button class="btn accept-btn">Accept</button>
+                        </form>
+
+                        <a href="/delivery_order_details/{{ order.order_id }}" class="btn view-btn">
+                            View
+                        </a>
+
+                    {% elif order.status == "Accepted" and order.delivery_id == session["delivery_id"] %}
+
+                        <form action="/mark_delivered/{{ order.order_id }}" method="POST">
+                            <button class="btn deliver-btn">Deliver</button>
+                        </form>
+
+                        <a href="/delivery_order_details/{{ order.order_id }}" class="btn view-btn">
+                            View
+                        </a>
+
+                    {% else %}
+
+                        <a href="/delivery_order_details/{{ order.order_id }}" class="btn view-btn">
+                            View
+                        </a>
+
+                    {% endif %}
+
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</div>
+
+{% endblock %}

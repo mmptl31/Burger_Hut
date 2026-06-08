@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment
+.env
+.env.*
+
+# Flask uploads
+static/images/menu/
+
+# Virtual environment
+venv/
+ENV/
+.envrc
+
+# OS files
+.DS_Store
+Thumbs.db

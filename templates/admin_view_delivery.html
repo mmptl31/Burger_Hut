@@ -1,0 +1,168 @@
+{% extends "admin_base.html" %}
+
+{% block content %}
+
+<style>
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.page-title {
+    color: #333;
+}
+
+.add-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.add-btn:hover {
+    background-color: #218838;
+}
+
+.table-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table thead {
+    background-color: #ff6600;
+    color: white;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 12px;
+    text-align: center;
+}
+
+.admin-table tbody tr {
+    border-bottom: 1px solid #eee;
+}
+
+.admin-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Buttons */
+
+.btn-edit {
+    background-color: #007bff;
+    color: white;
+    padding: 6px 12px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.btn-edit:hover {
+    background-color: #0069d9;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    color: white;
+    padding: 6px 12px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}
+
+.btn-restore {
+    background-color: #28a745;
+    color: white;
+    padding: 6px 12px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+.btn-restore:hover {
+    background-color: #218838;
+}
+
+/* Status */
+
+.status-active {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.status-inactive {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+</style>
+
+<div class="page-header">
+    <h1 class="page-title">Delivery Boys</h1>
+    <a href="/admin/add_delivery" class="add-btn">+ Add Delivery Boy</a>
+</div>
+
+<div class="table-container">
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for boy in boys %}
+            <tr>
+                <td>{{ boy.delivery_id }}</td>
+                <td>{{ boy.name }}</td>
+                <td>{{ boy.phone }}</td>
+                <td>{{ boy.email }}</td>
+
+                <td>
+                    {% if boy.is_active %}
+                        <span class="status-active">Active</span>
+                    {% else %}
+                        <span class="status-inactive">Inactive</span>
+                    {% endif %}
+                </td>
+
+                <td>
+                    <a class="btn-edit" href="/admin/edit_delivery/{{ boy.delivery_id }}">Edit</a>
+
+                    {% if boy.is_active %}
+                        <a class="btn-delete" href="/admin/delete_delivery/{{ boy.delivery_id }}">Deactivate</a>
+                    {% else %}
+                        <a class="btn-restore" href="/admin/restore_delivery/{{ boy.delivery_id }}">Restore</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

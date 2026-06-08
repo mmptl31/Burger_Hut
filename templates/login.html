@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - Burger Hut</title>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #d62828, #f77f00);
+        }
+
+        .container {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            width: 350px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+            color: white;
+        }
+
+        h2 { margin-bottom: 25px; }
+
+        .input-box {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            margin-top: 5px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: yellow;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: white;
+            transform: scale(1.05);
+        }
+
+        .link-text {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .link-text a {
+            color: yellow;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .link-text a:hover {
+            text-decoration: underline;
+        }
+
+        .back {
+            display: block;
+            margin-top: 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+        }
+        a.forgot-link {
+		display: inline-block;
+		margin-top: 10px;
+		font-size: 14px;
+		color: #e63946;
+		text-decoration: none;
+		font-weight: 500;
+		transition: 0.3s;
+		}
+
+		a.forgot-link:hover {
+		color: #b71c1c;
+		text-decoration: underline;
+		}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Login 🍔</h2>
+
+    <!-- FORM START -->
+    <form method="POST">
+
+        <div class="input-box">
+            <label>Email</label>
+            <input type="email" name="email" required>
+        </div>
+
+        <div class="input-box">
+            <label>Password</label>
+            <input type="password" name="password" required>
+        </div>
+
+        <button type="submit" class="btn">Login</button>
+		
+
+
+    </form>
+    <!-- FORM END -->
+
+    <div class="link-text">
+        Don't have an account? <a href="/signup">Sign Up</a><br>
+		<a href="/forgot_password" class="forgot-link">Forgot Password?</a>
+    </div>
+
+    <a href="/" class="back">⬅ Back to Home</a>
+</div>
+
+</body>
+</html>

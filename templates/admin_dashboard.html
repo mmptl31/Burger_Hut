@@ -1,0 +1,28 @@
+{% extends "admin_base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+
+<h1>Welcome, Admin 👋</h1>
+
+<div class="card-container">
+
+    <div class="card">
+        <h3>Total Menu Items</h3>
+        <p>{{ total_menu }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Total Orders</h3>
+        <p>{{ total_orders }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Total Users</h3>
+        <p>{{ total_users }}</p>
+    </div>
+
+</div>
+
+{% endblock %}
