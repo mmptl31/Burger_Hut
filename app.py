@@ -27,9 +27,7 @@ mail = Mail(app)
 
 # ------------------ DATABASE CONNECTION ------------------ #
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
-    'DATABASE_URL',
-    'mysql+mysqlconnector://root:root123@localhost/burger_hut'
-)
+    'DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
